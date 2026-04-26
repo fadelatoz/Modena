@@ -60,5 +60,7 @@ const ServicesSection = () => {
   );
 };
 
-export default ServicesSection;
+import ProductCategorySection from './ProductCategorySection';
+
+export default ProductCategorySection;
 

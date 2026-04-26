@@ -1,88 +1,95 @@
+
+"use client";
+
 import Link from 'next/link';
 import Container from '@/components/atoms/Container';
 import Text from '@/components/atoms/Text';
-import Icon from '@/components/atoms/Icon';
 import Button from '@/components/atoms/Button';
-import {  Mail, Phone, MapPin } from 'lucide-react';
-import Logo from '@/components/molecules/Logo';
+import Image from 'next/image';
 
 const Footer = () => {
-  const navItems = [
-    { name: 'Features', href: '#features' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Documentation', href: '#docs' },
-    { name: 'Support', href: '#support' },
-  ];
-
-  const companyItems = [
-    { name: 'About', href: '/about' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Press', href: '/press' },
-  ];
-
-  const legalItems = [
-    { name: 'Privacy', href: '/privacy' },
-    { name: 'Terms', href: '/terms' },
-    { name: 'Cookie Policy', href: '/cookies' },
-  ];
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle newsletter subscription
+  };
 
   return (
-    <footer className="bg-gradient-to-t from-black/90 to-gray-900/90 text-white border-t border-white/10">
-      <Container className="py-20">
-        <div className="grid md:grid-cols-4 gap-12 lg:gap-16">
-          {/* Brand */}
-          <div className="space-y-6">
-            <Logo />
-            <Text variant="body" className="text-foreground/60 max-w-md">
-              Making smart homes accessible to everyone with intuitive controls and rock-solid reliability.
-            </Text>
-            <div className="flex space-x-4">
-              <Icon name={Mail} size={20} className="hover:text-purple-400 cursor-pointer transition-colors" />
-              <Icon name={Mail} size={20} className="hover:text-purple-400 cursor-pointer transition-colors" />
-              <Icon name={Mail} size={20} className="hover:text-purple-400 cursor-pointer transition-colors" />
+    <footer>
+      {/* Newsletter Section */}
+      <div className="w-full px-10 py-8 bg-gradient-to-r from-[#4B2E83] to-[#020617] text-white rounded-t-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="text-center lg:text-left flex-1">
+          <Text variant="h3" weight="semibold" className="text-xl mb-2">
+            Subscribe to the newsletter
+          </Text>
+          <Text variant="body" className="text-sm text-white/70">
+            Stay updated with the latest Seamless updates and IoT news
+          </Text>
+        </div>
+
+        <form onSubmit={handleNewsletterSubmit} className="flex items-center gap-3 w-full lg:w-auto min-w-[280px]">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="flex-1 bg-transparent border border-white/30 px-4 py-2 rounded-md text-sm placeholder:text-white/50 outline-none focus:border-white transition-colors"
+            required
+          />
+          <Button 
+            type="submit"
+            size="sm" 
+            variant="secondary"
+            className="bg-white text-black px-6 py-2 text-sm font-medium rounded-md hover:bg-gray-200 whitespace-nowrap"
+          >
+            Subscribe
+          </Button>
+        </form>
+      </div>
+
+      {/* Footer Info Section */}
+      <div className="bg-gray-100 px-10 py-10">
+        <Container>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-8">
+            {/* Logo */}
+            <Image
+              src="/assets/MODENA Seamless - Full Lockup Logo - Full Color 1.png"
+              alt="MODENA Seamless"
+              width={140}
+              height={40}
+              className="w-[140px] object-contain"
+            />
+
+            {/* Certifications */}
+            <div className="flex items-center gap-6 opacity-80 hover:opacity-100 transition-opacity">
+              {/* GDPR */}
+              <div className="w-[60px] h-[30px] bg-gray-200 rounded cursor-pointer hover:opacity-90 transition-opacity flex items-center justify-center">
+                GDPR
+              </div>
+              {/* CCPA */}
+              <div className="w-[60px] h-[30px] bg-gray-200 rounded cursor-pointer hover:opacity-90 transition-opacity flex items-center justify-center">
+                CCPA
+              </div>
+              {/* SOC2 */}
+              <div className="w-[60px] h-[30px] bg-gray-200 rounded cursor-pointer hover:opacity-90 transition-opacity flex items-center justify-center">
+                SOC2
+              </div>
             </div>
           </div>
 
-          {/* Navigation */}
-          <div>
-            <Text variant="h4" weight="bold" className="mb-6">Product</Text>
-            {navItems.map((item) => (
-              <Link key={item.name} href={item.href} className="block py-1 text-foreground/70 hover:text-white transition-colors text-sm">
-                {item.name}
+          <div className="flex flex-col md:flex-row justify-between items-center  pt-8 border-t border-gray-200">
+          <Link href="/cookies" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+                Cookies Policy
               </Link>
-            ))}
-          </div>
-
-          <div>
-            <Text variant="h4" weight="bold" className="mb-6">Company</Text>
-            {companyItems.map((item) => (
-              <Link key={item.name} href={item.href} className="block py-1 text-foreground/70 hover:text-white transition-colors text-sm">
-                {item.name}
+              <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+                Privacy Policy
               </Link>
-            ))}
-          </div>
-
-          <div>
-            <Text variant="h4" weight="bold" className="mb-6">Legal</Text>
-            {legalItems.map((item) => (
-              <Link key={item.name} href={item.href} className="block py-1 text-foreground/70 hover:text-white transition-colors text-sm">
-                {item.name}
+              <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+                Terms and Conditions
               </Link>
-            ))}
-          </div>
-        </div>
-      </Container>
-
-      {/* Bottom bar */}
-      <div className="border-t border-white/10 py-8">
-        <Container className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <Text variant="caption" className="text-foreground/50">
-            © 2024 SmartHome IoT. All rights reserved.
-          </Text>
-          <div className="flex items-center gap-2 text-foreground/50 text-sm">
-            <Icon name={Mail} size={16} />
-            <Icon name={Phone} size={16} />
-            <Icon name={MapPin} size={16} />
+      
+            <div className="flex gap-6">
+            <Text variant="caption" className="text-sm text-gray-400">
+              Copyright © 2024 MODENA IoT. All Rights Reserved.
+            </Text>
+            </div>
           </div>
         </Container>
       </div>
@@ -91,4 +98,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
 

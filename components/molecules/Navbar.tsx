@@ -22,6 +22,7 @@ interface NavbarProps {
 const Navbar = ({ className }: NavbarProps) => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,8 +60,8 @@ const Navbar = ({ className }: NavbarProps) => {
           />
         </Link>
 
-        {/* Navigation Menu */}
-        <div className="flex items-center gap-8">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -72,12 +73,46 @@ const Navbar = ({ className }: NavbarProps) => {
                   isActive ? textActiveColor : textInactiveColor,
                   isDefaultState && isActive && 'border-b-2 border-[#6C4CF1]'
                 )}
+                onClick={() => setOpen(false)}
               >
                 {item.name}
               </Link>
             );
           })}
         </div>
+
+        {/* Mobile Toggle */}
+        <button 
+          className="md:hidden text-gray-500 hover:text-gray-900 p-1 rounded-md transition-colors text-lg"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+        >
+          {open ? '▲' : '▼'}
+        </button>
+
+        {/* Mobile Menu */}
+        {open && (
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white px-6 py-6 rounded-b-2xl shadow-xl border-t border-gray-100 animate-in slide-in-from-top duration-300">
+            <div className="flex flex-col gap-6">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={clsx(
+                      'text-base font-medium py-3 px-4 rounded-lg transition-all duration-200 text-left',
+                      isActive ? 'text-[#5B3DF5] bg-purple-50 font-semibold' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                    )}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

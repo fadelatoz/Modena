@@ -56,29 +56,63 @@ const AppShowcase = () => {
             Seamless control of your smart home from anywhere, anytime.
           </Text>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-            <Button variant="outline" size="lg" className="border-gray-200">
-              App Store
+            <Button variant="outline" size="lg" className="border-gray-200 cursor-pointer bg-white">
+                <Image
+                    src={'/play_store.png'}
+                    width={30}
+                    height={30}
+                    alt='play-store'
+                    className='mr-2'
+
+                />
+                <span className='text-black'>App Store</span>
+              
             </Button>
-            <Button variant="outline" size="lg" className="border-gray-200">
-              Play Store
+            <Button variant="outline" size="lg" className="border-gray-200 cursor-pointer rounded-tr-xl bg-white text-shadow-black">
+            <Image
+                src={'/app_store.png'}
+                width={30}
+                height={30}
+                alt='app-store'
+                className='mr-2'
+                />
+                <span className='text-black'>
+                     Play Store  
+                </span>
+              
             </Button>
           </div>
         </div>
 
         <div className="flex justify-center">
-          <div 
+
+{/* DESKTOP */}
+            <div
             ref={phoneRef}
-            className="phone-mockup will-change-transform"
-          >
+            className="hidden sm:block phone-mockup will-change-transform"
+            >
             <Image
-              src="/assets/App Showcase.png"
-              alt="MODENA Seamless App"
-              width={1296}
-              height={518}
-              className="rounded-3xl border border-white/20 max-w-full h-auto"
-              priority
+                src="/assets/App Showcase.png"
+                alt="MODENA Seamless App"
+                width={1296}
+                height={518}
+                className="rounded-3xl border border-white/20 max-w-full h-auto"
+                priority
             />
-          </div>
+            </div>
+
+            {/* MOBILE */}
+            <div className="block sm:hidden">
+            <Image
+                src="/assets/App_show_mob.png"
+                alt="MODENA Seamless App Mobile"
+                width={375}
+                height={600}
+                className="rounded-2xl max-w-full h-auto"
+                priority
+            />
+            </div>
+
         </div>
       </Container>
     </section>

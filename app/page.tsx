@@ -3,10 +3,11 @@ import Hero from '@/components/organisms/Hero';
 import FeaturesGrid from '@/components/organisms/FeatureGrid';
 import AppShowcase from '@/components/organisms/AppShowcase';
 import SmartHomePreview from '@/components/organisms/SmartHomePreview';
-import ServicesSection from '@/components/organisms/ServicesSection';
 import FAQSection from '@/components/organisms/FAQSection';
 import CTASection from '@/components/organisms/CTASection';
 import Footer from '@/components/organisms/Footer';
+import ProductCategorySection from '@/components/organisms/ServicesSection';
+import SmartSceneSection from '@/components/organisms/SmartSceneSection';
 
 export default function HomePage() {
   return (
@@ -16,7 +17,8 @@ export default function HomePage() {
       <FeaturesGrid />
       <AppShowcase />
       <SmartHomePreview />
-      <ServicesSection />
+      <ProductCategorySection/>
+      <SmartSceneSection/>
       <FAQSection />
       <CTASection />
       <Footer />

@@ -1,56 +1,62 @@
+"use client";
+
+import { useState } from 'react';
 import Container from '@/components/atoms/Container';
 import Text from '@/components/atoms/Text';
 import Button from '@/components/atoms/Button';
+import Image from 'next/image';
+import Modal from '@/components/molecules/Modal';
+import ContactForm from './ContactForm';
 
-const CTASection = () => {
+const CtaSection = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <section className="py-32 bg-gradient-to-r from-purple-600 to-indigo-600 text-white relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, #ffffff20 0%, transparent 50%), 
-                            radial-gradient(circle at 75% 75%, #ffffff20 0%, transparent 50%)`
-        }} />
-      </div>
-      
+    <section className="py-20 bg-white">
       <Container>
-        <div className="opacity-0 animate-[fade-in-up_1s_ease-out] text-center space-y-8 max-w-3xl mx-auto">
-          <Text as="h1" variant="h2" className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-            Ready to make your home smarter?
-          </Text>
+        <div className="max-w-4xl mx-auto bg-gradient-to-r from-[#EDE7F6] to-[#D1C4E9] rounded-2xl px-10 py-8 flex flex-col lg:flex-row items-center justify-between gap-8 hover:scale-[1.01] transition-all duration-300 group">
           
-          <Text variant="body-lg" className="text-2xl opacity-90">
-            Join 50,000+ homeowners who trust SmartHome for their smart living
-          </Text>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
-            <Button size="lg" variant="primary" className="text-xl shadow-2xl">
-              Start Free Trial
-            </Button>
-            <Button size="lg" variant="ghost" className="text-xl border-white/50 hover:bg-white/10">
-              View Pricing
-            </Button>
+          {/* Left Image */}
+          <div className="flex-shrink-0">
+            <Image
+              src="/assets/cta-section/contact-us.png"
+              alt="Contact Us"
+              width={90}
+              height={90}
+              className="w-[90px] h-auto object-contain"
+              priority
+            />
           </div>
 
-          <div className="grid grid-cols-3 gap-8 pt-12 opacity-80">
-            <div className="text-center">
-              <Text variant="h3" className="font-bold text-white mb-1">50K+</Text>
-              <Text variant="caption">Happy Users</Text>
-            </div>
-            <div className="text-center">
-              <Text variant="h3" className="font-bold text-white mb-1">99.9%</Text>
-              <Text variant="caption">Uptime</Text>
-            </div>
-            <div className="text-center">
-              <Text variant="h3" className="font-bold text-white mb-1">4.9/5</Text>
-              <Text variant="caption">Rating</Text>
-            </div>
+          {/* Middle Text */}
+          <div className="flex-1 text-center lg:text-left">
+            <Text variant="h3" weight="semibold" className="text-xl text-gray-900 mb-2 group-hover:text-black transition-colors">
+              Ask Anything
+            </Text>
+            <Text variant="body" className="text-sm text-gray-500 max-w-md leading-relaxed">
+              Have questions about Seamless? Our support team is ready to help you get started.
+            </Text>
           </div>
+
+          {/* Right Button */}
+          <Button 
+            variant="outline" 
+            size="md" 
+            className="bg-white text-gray-900 border-gray-200 hover:bg-gray-100 hover:border-gray-300 px-6 py-2 text-sm font-medium rounded-md shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Contact Us
+          </Button>
         </div>
       </Container>
+
+      {/* Modal */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ContactForm />
+      </Modal>
     </section>
   );
 };
 
-export default CTASection;
+export default CtaSection;
 
