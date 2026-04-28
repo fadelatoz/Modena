@@ -1,25 +1,25 @@
 "use client";
 
-import { useCallback, useEffect, useState } from 'react';
-import Image from 'next/image';
-import Container from '@/components/atoms/Container';
-import Text from '@/components/atoms/Text';
-import clsx from 'clsx';
-import useEmblaCarousel from 'embla-carousel-react';
+import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
+import Container from "@/components/atoms/Container";
+import Text from "@/components/atoms/Text";
+import clsx from "clsx";
+import useEmblaCarousel from "embla-carousel-react";
 
 const SCENE_IMAGES = [
-  '/assets/smart-scene/scene-1.png',
-  '/assets/smart-scene/scene-1.png',
-  '/assets/smart-scene/scene-1.png',
-  '/assets/smart-scene/scene-1.png',
-  '/assets/smart-scene/scene-1.png',
+  "/assets/smart-scene/Rectangle 4945.png",
+  "/assets/smart-scene/scene-1.png",
+"/assets/product-category/Homepage_Product Category_Smart Devices 4.png",
+  "/assets/smart-scene/Rectangle 4941.png",
+  "/assets/smart-scene/Rectangle 4943.png",
 ];
 
 export default function SmartSceneSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'center',
-    loop: true,
-    containScroll: 'keepSnaps',
+    align: "center",
+    loop: true, 
+
   });
 
   const [selectedIndex, setSelectedIndex] = useState(2);
@@ -31,14 +31,14 @@ export default function SmartSceneSection() {
       setSelectedIndex(emblaApi.selectedScrollSnap());
     };
 
-    emblaApi.on('select', onSelect);
+    emblaApi.on("select", onSelect);
     onSelect();
 
-    return () => emblaApi.off('select', onSelect);
+    return () => emblaApi.off("select", onSelect);
   }, [emblaApi]);
 
-  const scrollTo = useCallback((index: number) => {
-    emblaApi?.scrollTo(index);
+  const scrollTo = useCallback((i: number) => {
+    emblaApi?.scrollTo(i);
   }, [emblaApi]);
 
   const getDiff = (index: number) => {
@@ -47,35 +47,11 @@ export default function SmartSceneSection() {
     const alt = diff > 0 ? diff - len : diff + len;
     return Math.abs(diff) < Math.abs(alt) ? diff : alt;
   };
-  const getStyle = (diff: number) => {
-    if (diff === 0) {
-      return 'scale-100 opacity-100 z-20';
-    }
-  
-    // NEAR
-    if (Math.abs(diff) === 1) {
-      return clsx(
-        'scale-90 opacity-70 z-10',
-        diff < 0
-          ? '[transform:rotateY(-18deg)]'   // 🔥 kiri → miring ke kiri
-          : '[transform:rotateY(28deg)]'    // 🔥 kanan → miring ke kanan
-      );
-    }
-  
-    // FAR
-    if (Math.abs(diff) === 2) {
-      return clsx(
-        'scale-80 opacity-50 z-0',
-        diff < 0
-          ? '[transform:rotateY(-28deg)]'
-          : '[transform:rotateY(38deg)]'
-      );
-    }
-  
-    return 'opacity-0';
-  };
+
+
+
   return (
-    <section className="py-24 bg-[#FFFFFF] overflow-hidden">
+    <section className="py-24 bg-white overflow-hidden">
       <Container>
 
         {/* HEADER */}
@@ -90,58 +66,87 @@ export default function SmartSceneSection() {
         </div>
 
         {/* 🔥 CAROUSEL */}
-        <div className="w-full max-w-[1200px] mx-auto [perspective:1600px]">
-          <div className="overflow-visible" ref={emblaRef}>
-            <div className="flex justify-center items-center gap-4">
+        <div className="relative py-16">
+          <div className="w-full [perspective:2000px]">
 
-              {SCENE_IMAGES.map((src, i) => {
-                const diff = getDiff(i);
-                const isActive = diff === 0;
+            <div ref={emblaRef} className="overflow-visible">
+              <div className="flex gap-6 items-center">
 
-                console.log(isActive)
+                {SCENE_IMAGES.map((src, i) => {
+                  const diff = getDiff(i);
+                  const isActive = diff === 0;
 
-                return (
-                  <div
-                    key={i}
-                    onClick={() => scrollTo(i)}
-                    className={clsx(
-                      'flex-none w-68 h-150.5 relative transition-all duration-500',
-                      getStyle(diff)
-                    )}
-                  >
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => scrollTo(i)}
+                      className={clsx(
+                        "flex-none relative transition-all duration-500 will-change-transform",
+                        "w-55 h-105 md:w-65 md:h-130 lg:w-75 lg:h-150",
+                      )}
+                    >
+                      {isActive ? (
+                        <div className="relative w-full h-full flex items-center justify-center">
 
-                    {/* ACTIVE (IPHONE) */}
-                    {isActive ? (
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <Image
-                          src="/assets/smart-scene/Apple Wrap.png"
-                          alt=""
-                          fill
-                          className="object-contain z-10"
-                        />
+                          {/* CONTENT */}
+                          <div
+                            className="absolute overflow-hidden z-0"
+                            style={{
+                              top: "0.2%",
+                              bottom: "2.2%",
+                              left: "1.2%",
+                              right: "7.2%",
+                              borderRadius: "36px",
+                            }}
+                          >
+                            <Image
+                              src={src}
+                              alt=""
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
 
-                        <div className="absolute inset-[6%] rounded-2xl overflow-hidden">
-                          <Image src={src} alt="" fill className="object-cover" />
+                          {/* FRAME */}
+                          <Image
+                            src="/assets/smart-scene/Apple Wrap.png"
+                            alt="frame"
+                            fill
+                            className="object-contain z-10 pointer-events-none"
+                          />
                         </div>
-                      </div>
-                    ) : (
-                      /* SIDE CARD */
-                      <div className="w-full h-full rounded-[18px] overflow-hidden bg-white/30 backdrop-blur-md">
-                        <Image
-                          src={src}
-                          alt=""
-                          fill
-                          className="object-cover grayscale"
-                        />
-                      </div>
-                    )}
+                      ) : (
+                        <div className="w-full h-full rounded-[20px] overflow-hidden">
+                          <Image
+                            src={src}
+                            alt=""
+                            fill
+                            className="object-cover grayscale"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
 
-                  </div>
-                );
-              })}
-
+              </div>
             </div>
           </div>
+
+          {/* ARROWS */}
+          <button
+            onClick={() => emblaApi?.scrollPrev()}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center"
+          >
+            ‹
+          </button>
+
+          <button
+            onClick={() => emblaApi?.scrollNext()}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center"
+          >
+            ›
+          </button>
         </div>
 
         {/* DESC */}

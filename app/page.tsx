@@ -6,7 +6,7 @@ import SmartHomePreview from '@/components/organisms/SmartHomePreview';
 import FAQSection from '@/components/organisms/FAQSection';
 import CTASection from '@/components/organisms/CTASection';
 import Footer from '@/components/organisms/Footer';
-import ProductCategorySection from '@/components/organisms/ServicesSection';
+import ProductCategorySection from '@/components/organisms/ProductCategorySection';
 import SmartSceneSection from '@/components/organisms/SmartSceneSection';
 
 export default function HomePage() {

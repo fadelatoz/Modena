@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Container from '@/components/atoms/Container';
 import Text from '@/components/atoms/Text';
 import Image from 'next/image';
 import SegmentedTabs, { SegmentedTab } from '@/components/atoms/SegmentedTabs';
-import useEmblaCarousel from 'embla-carousel-react';
 import HotspotModal from '@/components/molecules/HotspotModal';
 import HotspotSlider from '@/components/organisms/HotspotSlider';
 import { HOTSPOT_DETAILS } from '@/constants/hotspotDetails';
@@ -24,7 +23,7 @@ const ROOMS: Room[] = [
   {
     key: "living",
     label: "Living Room",
-    image: "/assets/smart-scene/scene-11.png",
+    image: "/assets/smart-scene/smart_mobile.png",
     hotspots: [
       { top: "52%", left: "26%" },
       { top: "53%", left: "33%" },
@@ -55,41 +54,30 @@ const ROOMS: Room[] = [
 ];
 
 const SmartHomePreview = () => {
-  const [mobileEmblaRef, mobileEmblaApi] = useEmblaCarousel({ 
-    align: 'start', 
-    loop: true, 
-    dragFree: false 
-  });
   const [activeRoomIndex, setActiveRoomIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
-  const [selectedHotspot, setSelectedHotspot] = useState(null);
 
   const activeRoom = ROOMS[activeRoomIndex];
 
-  // Sync mobile slider state
-  useEffect(() => {
-    if (!mobileEmblaApi) return;
-
-    const onSelect = () => {
-      setActiveRoomIndex(mobileEmblaApi.selectedScrollSnap());
-    };
-    
-    mobileEmblaApi.on('select', onSelect);
-    onSelect();
-
-    return () => {
-      if (mobileEmblaApi) {
-        mobileEmblaApi.off('select', onSelect);
-      }
-    };
-  }, [mobileEmblaApi]);
-
   const scrollToRoom = useCallback((roomKey: string) => {
     const index = ROOMS.findIndex(room => room.key === roomKey);
-    mobileEmblaApi?.scrollTo(index);
-  }, [mobileEmblaApi]);
+    if (index >= 0) {
+      setActiveRoomIndex(index);
+    }
+  }, []);
 
-  console.log(activeRoom)
+  const goToRoom = useCallback((nextIndex: number) => {
+    const total = ROOMS.length;
+    setActiveRoomIndex((nextIndex + total) % total);
+  }, []);
+
+  const handlePrevRoom = useCallback(() => {
+    goToRoom(activeRoomIndex - 1);
+  }, [activeRoomIndex, goToRoom]);
+
+  const handleNextRoom = useCallback(() => {
+    goToRoom(activeRoomIndex + 1);
+  }, [activeRoomIndex, goToRoom]);
 
   return (
     <>
@@ -150,7 +138,6 @@ const SmartHomePreview = () => {
                     left: hotspot.left,
                   }}
                   onClick={() => {
-                    setSelectedHotspot(index);
                     setOpenModal(true);
                   }}                >
             <Image
@@ -181,72 +168,98 @@ const SmartHomePreview = () => {
   </section>
 </div>
       {/* MOBILE FULL PAGE SLIDER */}
-      <section className="md:hidden relative h-screen overflow-hidden">
-        <div ref={mobileEmblaRef} className="h-full">
-          <div className="flex h-full">
-            {ROOMS.map((room, index) => (
-              <div key={room.key} className="flex-none w-screen h-screen relative">
-                {/* Background - INSIDE SLIDE */}
-                <Image
-                  src={room.image}
-                  alt={room.label}
-                  fill
-                  sizes="100vw"
-                  className="object-cover brightness-75"
-                  priority={index === 0}
-                />
-                
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10" />
-                
-                {/* Content - INSIDE SLIDE */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center px-6 pt-20 pb-32 z-20 text-center text-white gap-8">
-                  {/* Header */}
-                  <div>
-                    <Text variant="h2" weight="bold" className="text-3xl mb-4 drop-shadow-2xl leading-tight">
-                      {room.label}
-                    </Text>
-                    <Text variant="body-lg" className="text-gray-200 max-w-md mx-auto opacity-90 drop-shadow-lg">
-                      Smart devices in action
-                    </Text>
-                  </div>
-                  
-                  {/* Phone Mockup */}
-                  <div className="relative w-64 h-80 rounded-[2rem] overflow-hidden border-8 border-black/90 shadow-2xl bg-black drop-shadow-2xl z-30">
-                    <Image
-                      src={room.image}
-                      alt={`${room.label} devices`}
-                      fill
-                      className="object-cover"
-                    />
-                    {room.hotspots.map((hotspot, hotspotIndex) => (
-                      <div
-                        key={hotspotIndex}
-                        className="absolute -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#6C4CF1] rounded-full flex items-center justify-center text-xs shadow-lg border-2 border-white/50 cursor-pointer hover:scale-125 hover:shadow-xl transition-all duration-200 z-40"
-                        style={{
-                          top: hotspot.top,
-                          left: hotspot.left,
-                        }}
-                      >
-                        M
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section className="relative min-h-screen overflow-hidden md:hidden">
+        <Image
+          src={activeRoom.image}
+          alt=""
+          fill
+          priority
+          className="object-cover"
+        />
 
-        {/* FIXED Selector - OUTSIDE slider */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-xs z-50 pointer-events-none md:hidden">
-          <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-1 shadow-2xl pointer-events-auto">
-            <SegmentedTabs 
-              tabs={ROOMS}
-              activeTab={ROOMS[activeRoomIndex].key}
-              onTabChange={scrollToRoom}
-              className="w-full"
-            />
+        <div className="absolute inset-0 bg-black/45 z-0" />
+
+        <div className="relative z-10 flex flex-col items-center justify-start pt-10 px-5">
+          <h2 className="text-white text-[38px] font-semibold leading-tight text-center max-w-[320px]">
+            Connect to a
+            <br />
+            True Smart Home
+          </h2>
+
+          <p className="text-white/80 text-[14px] text-center max-w-[300px] mt-4 leading-6">
+            Discover how our solutions can transform your space into a smarter home.
+          </p>
+
+          <div className="relative mt-10 w-[290px] h-[600px]">
+            <div
+              className="absolute overflow-hidden z-10"
+              style={{
+                top: "5.8%",
+                bottom: "5.8%",
+                left: "6.8%",
+                right: "6.8%",
+                borderRadius: "38px",
+              }}
+            >
+            
+
+              {activeRoom.hotspots.map((hotspot, index) => (
+                <button
+                  key={index}
+                  className="absolute w-8 h-8 rounded-full bg-[#6C4CF1] flex items-center justify-center shadow-lg z-30"
+                  style={{
+                    top: hotspot.top,
+                    left: hotspot.left,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                  onClick={() => setOpenModal(true)}
+                >
+                  <Image
+                    src="/assets/seamless-icon.gif"
+                    alt=""
+                    width={18}
+                    height={18}
+                    className="object-contain"
+                  />
+                </button>
+              ))}
+            </div>
+
+      
+
+            <button
+              onClick={handlePrevRoom}
+              className="absolute left-[-18px] top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white text-black shadow-lg flex items-center justify-center"
+              aria-label="Previous room"
+            >
+              ‹
+            </button>
+
+            <button
+              onClick={handleNextRoom}
+              className="absolute right-[-18px] top-1/2 -translate-y-1/2 z-40 w-10 h-10 rounded-full bg-white text-black shadow-lg flex items-center justify-center"
+              aria-label="Next room"
+            >
+              ›
+            </button>
+
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 w-[240px]">
+              <div className="flex items-center rounded-full bg-[#2E1A64] p-1 shadow-lg">
+                {ROOMS.map((room) => (
+                  <button
+                    key={room.key}
+                    onClick={() => scrollToRoom(room.key)}
+                    className={`flex-1 rounded-full px-3 py-2 text-[12px] font-medium transition-colors ${
+                      activeRoom.key === room.key
+                        ? 'bg-white text-[#2E1A64]'
+                        : 'text-white'
+                    }`}
+                  >
+                    {room.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
