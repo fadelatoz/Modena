@@ -1,11 +1,10 @@
-
 "use client";
 
-import Link from 'next/link';
-import Container from '@/components/atoms/Container';
-import Text from '@/components/atoms/Text';
-import Button from '@/components/atoms/Button';
-import Image from 'next/image';
+import Link from "next/link";
+import Container from "@/components/atoms/Container";
+import Text from "@/components/atoms/Text";
+import Button from "@/components/atoms/Button";
+import Image from "next/image";
 
 const Footer = () => {
   const handleNewsletterSubmit = (e: React.FormEvent) => {
@@ -26,16 +25,19 @@ const Footer = () => {
           </Text>
         </div>
 
-        <form onSubmit={handleNewsletterSubmit} className="flex items-center gap-3 w-full lg:w-auto min-w-[280px]">
+        <form
+          onSubmit={handleNewsletterSubmit}
+          className="flex items-center gap-3 w-full lg:w-auto min-w-[280px]"
+        >
           <input
             type="email"
             placeholder="Enter your email"
             className="flex-1 bg-transparent border border-white/30 px-4 py-2 rounded-md text-sm placeholder:text-white/50 outline-none focus:border-white transition-colors"
             required
           />
-          <Button 
+          <Button
             type="submit"
-            size="sm" 
+            size="sm"
             variant="secondary"
             className="bg-white text-black px-6 py-2 text-sm font-medium rounded-md hover:bg-gray-200 whitespace-nowrap"
           >
@@ -75,20 +77,29 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-center  pt-8 border-t border-gray-200">
-          <Link href="/cookies" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-                Cookies Policy
-              </Link>
-              <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-                Terms and Conditions
-              </Link>
-      
+            <Link
+              href="/cookies"
+              className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              Cookies Policy
+            </Link>
+            <Link
+              href="/privacy"
+              className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              Terms and Conditions
+            </Link>
+
             <div className="flex gap-6">
-            <Text variant="caption" className="text-sm text-gray-400">
-              Copyright © 2024 MODENA IoT. All Rights Reserved.
-            </Text>
+              <Text variant="caption" className="text-sm text-gray-400">
+                Copyright © 2024 MODENA IoT. All Rights Reserved.
+              </Text>
             </div>
           </div>
         </Container>
@@ -98,5 +109,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-

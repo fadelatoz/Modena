@@ -1,6 +1,8 @@
-import React from 'react';
-import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
-import HotspotCard from '@/components/molecules/HotspotCard';
+import React from "react";
+import useEmblaCarousel, {
+  type UseEmblaCarouselType,
+} from "embla-carousel-react";
+import HotspotCard from "@/components/molecules/HotspotCard";
 
 interface HotspotItem {
   title: string;
@@ -15,7 +17,7 @@ interface HotspotSliderProps {
 const HotspotSlider: React.FC<HotspotSliderProps> = ({ items }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
-    align: 'center',
+    align: "center",
   });
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -27,17 +29,16 @@ const HotspotSlider: React.FC<HotspotSliderProps> = ({ items }) => {
       setSelectedIndex(emblaApi.selectedScrollSnap());
     };
 
-    emblaApi.on('select', onSelect);
+    emblaApi.on("select", onSelect);
     onSelect();
 
     return () => {
-      emblaApi.off('select', onSelect);
+      emblaApi.off("select", onSelect);
     };
   }, [emblaApi]);
 
   return (
     <div className="relative w-full">
-
       {/* LEFT ARROW */}
       <button
         onClick={() => emblaApi?.scrollPrev()}
@@ -60,10 +61,7 @@ const HotspotSlider: React.FC<HotspotSliderProps> = ({ items }) => {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {items.map((item, i) => (
-            <div
-              key={i}
-              className="flex-[0_0_100%] flex justify-center px-4"
-            >
+            <div key={i} className="flex-[0_0_100%] flex justify-center px-4">
               <HotspotCard {...item} />
             </div>
           ))}
@@ -77,16 +75,16 @@ const HotspotSlider: React.FC<HotspotSliderProps> = ({ items }) => {
             key={i}
             onClick={() => emblaApi?.scrollTo(i)}
             className={`w-3 h-3 rounded-full transition-all duration-200 ${
-              i === selectedIndex ? 'bg-white scale-125 shadow-lg' : 'bg-white/40 hover:bg-white/60'
+              i === selectedIndex
+                ? "bg-white scale-125 shadow-lg"
+                : "bg-white/40 hover:bg-white/60"
             }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
       </div>
-
     </div>
   );
 };
 
 export default HotspotSlider;
-

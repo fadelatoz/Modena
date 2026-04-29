@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 const navItems = [
-  { name: 'Homepage', href: '/' },
-  { name: 'App', href: '/app' },
-  { name: 'Smart Scenes', href: '/scenes' },
-  { name: 'Voice Control', href: '/voice' },
-  { name: 'Videos', href: '/videos' },
+  { name: "Homepage", href: "/" },
+  { name: "App", href: "/app" },
+  { name: "Smart Scenes", href: "/scenes" },
+  { name: "Voice Control", href: "/voice" },
+  { name: "Videos", href: "/videos" },
 ] as const;
 
 interface NavbarProps {
@@ -29,21 +29,27 @@ const Navbar = ({ className }: NavbarProps) => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const isDefaultState = !isScrolled;
-  const textInactiveColor = isDefaultState ? 'text-gray-500 hover:text-gray-900' : 'text-white/80 hover:text-white';
-  const textActiveColor = 'text-[#6C4CF1]';
-  const navbarBg = isDefaultState ? 'bg-white border-b border-gray-100' : 'bg-transparent backdrop-blur-md';
+  const textInactiveColor = isDefaultState
+    ? "text-gray-500 hover:text-gray-900"
+    : "text-white/80 hover:text-white";
+  const textActiveColor = "text-[#6C4CF1]";
+  const navbarBg = isDefaultState
+    ? "bg-white border-b border-gray-100"
+    : "bg-transparent backdrop-blur-md";
 
   return (
-    <nav className={twMerge(
-      'fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ease-in-out',
-      navbarBg,
-      className
-    )}>
+    <nav
+      className={twMerge(
+        "fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ease-in-out",
+        navbarBg,
+        className,
+      )}
+    >
       <div className="h-full max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
@@ -53,8 +59,8 @@ const Navbar = ({ className }: NavbarProps) => {
             width={200}
             height={40}
             className={clsx(
-              'h-10 w-auto object-contain transition-colors duration-300',
-              isDefaultState ? 'invert-0' : 'invert filter brightness-0'
+              "h-10 w-auto object-contain transition-colors duration-300",
+              isDefaultState ? "invert-0" : "invert filter brightness-0",
             )}
             priority
           />
@@ -69,9 +75,9 @@ const Navbar = ({ className }: NavbarProps) => {
                 key={item.href}
                 href={item.href}
                 className={clsx(
-                  'text-sm font-medium px-1 py-1 rounded-md transition-all duration-300 whitespace-nowrap',
+                  "text-sm font-medium px-1 py-1 rounded-md transition-all duration-300 whitespace-nowrap",
                   isActive ? textActiveColor : textInactiveColor,
-                  isDefaultState && isActive && 'border-b-2 border-[#6C4CF1]'
+                  isDefaultState && isActive && "border-b-2 border-[#6C4CF1]",
                 )}
                 onClick={() => setOpen(false)}
               >
@@ -82,12 +88,12 @@ const Navbar = ({ className }: NavbarProps) => {
         </div>
 
         {/* Mobile Toggle */}
-        <button 
+        <button
           className="md:hidden text-gray-500 hover:text-gray-900 p-1 rounded-md transition-colors text-lg"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          {open ? '▲' : '▼'}
+          {open ? "▲" : "▼"}
         </button>
 
         {/* Mobile Menu */}
@@ -101,8 +107,10 @@ const Navbar = ({ className }: NavbarProps) => {
                     key={item.href}
                     href={item.href}
                     className={clsx(
-                      'text-base font-medium py-3 px-4 rounded-lg transition-all duration-200 text-left',
-                      isActive ? 'text-[#5B3DF5] bg-purple-50 font-semibold' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                      "text-base font-medium py-3 px-4 rounded-lg transition-all duration-200 text-left",
+                      isActive
+                        ? "text-[#5B3DF5] bg-purple-50 font-semibold"
+                        : "text-gray-500 hover:text-gray-900 hover:bg-gray-50",
                     )}
                     onClick={() => setOpen(false)}
                   >
@@ -118,7 +126,6 @@ const Navbar = ({ className }: NavbarProps) => {
   );
 };
 
-Navbar.displayName = 'Navbar';
+Navbar.displayName = "Navbar";
 
 export default Navbar;
-

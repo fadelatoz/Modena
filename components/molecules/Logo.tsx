@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import Text from '@/components/atoms/Text';
-import Icon from '@/components/atoms/Icon';
-import { Home } from 'lucide-react';
+import Text from "@/components/atoms/Text";
+import Icon from "@/components/atoms/Icon";
+import { Home } from "lucide-react";
 
 const Logo = () => {
   return (
@@ -18,4 +18,3 @@ const Logo = () => {
 };
 
 export default Logo;
-

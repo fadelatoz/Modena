@@ -1,15 +1,21 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 
-import SegmentedTabs from '@/components/atoms/SegmentedTabs';
-import useEmblaCarousel from 'embla-carousel-react';
-import { FEATURES, TABS } from '@/lib/featureGridConstants';
-import FeatureCard from '../atoms/FeatureCard';
+import SegmentedTabs from "@/components/atoms/SegmentedTabs";
+import useEmblaCarousel from "embla-carousel-react";
+import { FEATURES, TABS } from "@/lib/featureGridConstants";
+import FeatureCard from "../atoms/FeatureCard";
 
 const FeatureGrid = () => {
-  const [activeTab, setActiveTab] = useState<'convenience' | 'productivity' | 'sustainability' | 'security'>('convenience');
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'center', dragFree: true });
+  const [activeTab, setActiveTab] = useState<
+    "convenience" | "productivity" | "sustainability" | "security"
+  >("convenience");
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: false,
+    align: "center",
+    dragFree: true,
+  });
 
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
@@ -19,7 +25,7 @@ const FeatureGrid = () => {
   // Reset carousel when tab changes
   useEffect(() => {
     if (emblaApi) {
-      emblaApi.reInit({ loop: false, align: 'center', dragFree: true });
+      emblaApi.reInit({ loop: false, align: "center", dragFree: true });
       emblaApi.scrollTo(0);
     }
   }, [activeTab, emblaApi]);
@@ -32,12 +38,13 @@ const FeatureGrid = () => {
             Make Your Life Easier with MODENA Seamless IoT
           </h2>
           <p className="text-gray-500 text-[20px] max-w-2xl mx-auto">
-            Transform everyday tasks into seamless experiences with intelligent automation
+            Transform everyday tasks into seamless experiences with intelligent
+            automation
           </p>
         </div>
 
         <div className="max-w-8/12 w-fit mx-auto mb-16">
-          <SegmentedTabs 
+          <SegmentedTabs
             tabs={TABS}
             activeTab={activeTab}
             onTabChange={setActiveTab}
@@ -56,7 +63,10 @@ const FeatureGrid = () => {
           <div className="overflow-hidden rounded-2xl" ref={emblaRef}>
             <div className="flex -m-2">
               {currentFeatures.map((feature, index) => (
-                <div key={`${activeTab}-${index}`} className="flex-none w-[85%] px-2">
+                <div
+                  key={`${activeTab}-${index}`}
+                  className="flex-none w-[85%] px-2"
+                >
                   <FeatureCard {...feature} />
                 </div>
               ))}
@@ -85,4 +95,3 @@ const FeatureGrid = () => {
 };
 
 export default FeatureGrid;
-

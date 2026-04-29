@@ -1,9 +1,12 @@
 "use client";
 
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import Text from '@/components/atoms/Text';
-import { contactSchema, ContactFormValues } from '@/constants/validation/contact.schema';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Text from "@/components/atoms/Text";
+import {
+  contactSchema,
+  ContactFormValues,
+} from "@/constants/validation/contact.schema";
 
 const ContactForm = () => {
   const {
@@ -17,10 +20,10 @@ const ContactForm = () => {
 
   const onSubmit = async (data: ContactFormValues) => {
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
     // Show success
-    alert('Form submitted successfully!');
+    alert("Form submitted successfully!");
     reset();
   };
 
@@ -38,7 +41,7 @@ const ContactForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <input
-            {...register('name')}
+            {...register("name")}
             type="text"
             placeholder="Full Name"
             className="w-full border-b border-gray-300 py-3 text-sm focus:outline-none focus:border-purple-500 focus:border-b-2 transition-colors"
@@ -52,7 +55,7 @@ const ContactForm = () => {
 
         <div>
           <input
-            {...register('email')}
+            {...register("email")}
             type="email"
             placeholder="Email Address"
             className="w-full border-b border-gray-300 py-3 text-sm focus:outline-none focus:border-purple-500 focus:border-b-2 transition-colors"
@@ -66,7 +69,7 @@ const ContactForm = () => {
 
         <div>
           <input
-            {...register('phone')}
+            {...register("phone")}
             type="tel"
             placeholder="Phone Number"
             className="w-full border-b border-gray-300 py-3 text-sm focus:outline-none focus:border-purple-500 focus:border-b-2 transition-colors"
@@ -80,7 +83,7 @@ const ContactForm = () => {
 
         <div>
           <textarea
-            {...register('message')}
+            {...register("message")}
             rows={4}
             placeholder="Your Message"
             className="w-full border-b border-gray-300 py-3 text-sm focus:outline-none focus:border-purple-500 focus:border-b-2 transition-colors resize-none"
@@ -89,14 +92,19 @@ const ContactForm = () => {
 
         <div className="flex items-center space-x-2">
           <input
-            {...register('agreement')}
+            {...register("agreement")}
             id="privacy"
             type="checkbox"
             className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 focus:ring-2"
           />
-          <label htmlFor="privacy" className="text-sm text-gray-700 cursor-pointer select-none">
-            I agree to the{' '}
-            <a href="#" className="text-purple-600 hover:underline">Privacy Policy</a>
+          <label
+            htmlFor="privacy"
+            className="text-sm text-gray-700 cursor-pointer select-none"
+          >
+            I agree to the{" "}
+            <a href="#" className="text-purple-600 hover:underline">
+              Privacy Policy
+            </a>
           </label>
         </div>
         {errors.agreement && (
@@ -110,7 +118,7 @@ const ContactForm = () => {
           disabled={isSubmitting}
           className="w-full bg-black text-white py-3 px-6 rounded-md font-medium hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? "Sending..." : "Send Message"}
         </button>
       </form>
     </div>
@@ -118,4 +126,3 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
-

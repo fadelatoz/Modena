@@ -1,26 +1,27 @@
 "use client";
 
-import { useState, useCallback, useMemo } from 'react';
-import clsx from 'clsx';
-import Container from '@/components/atoms/Container';
-import Text from '@/components/atoms/Text';
-import Pagination from '../molecules/Pagination';
-import { FAQItem, FAQ_DATA, FAQ_PER_PAGE } from '@/constants/faq';
+import { useState, useCallback, useMemo } from "react";
+import clsx from "clsx";
+import Container from "@/components/atoms/Container";
+import Text from "@/components/atoms/Text";
+import Pagination from "../molecules/Pagination";
+import { FAQItem, FAQ_DATA, FAQ_PER_PAGE } from "@/constants/faq";
 
 const FAQ_SECTION = () => {
   const [openId, setOpenId] = useState<number | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const toggleFAQ = useCallback((id: number) => {
-    setOpenId(prev => prev === id ? null : id);
+    setOpenId((prev) => (prev === id ? null : id));
   }, []);
 
   const filteredFAQ = useMemo(() => {
     const lowerSearch = searchTerm.toLowerCase();
-    return FAQ_DATA.filter(item => 
-      item.question.toLowerCase().includes(lowerSearch) ||
-      item.answer.toLowerCase().includes(lowerSearch)
+    return FAQ_DATA.filter(
+      (item) =>
+        item.question.toLowerCase().includes(lowerSearch) ||
+        item.answer.toLowerCase().includes(lowerSearch),
     );
   }, [searchTerm]);
 
@@ -40,25 +41,36 @@ const FAQ_SECTION = () => {
             Frequently Asked Questions
           </Text>
           <Text variant="body-lg" className="text-gray-600">
-            Find answers to common questions about Seamless connectivity and setup
+            Find answers to common questions about Seamless connectivity and
+            setup
           </Text>
         </div>
 
         <div className="max-w-[900px] mx-auto bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
           {/* Search */}
           <div className="p-6 border-b border-gray-100">
-              <div className="relative">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search FAQs..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-gray-100 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-500"
+            <div className="relative">
+              <svg
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
-              </div>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search FAQs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-gray-100 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-500"
+              />
+            </div>
           </div>
 
           {/* FAQ List */}
@@ -74,27 +86,44 @@ const FAQ_SECTION = () => {
               </div>
             ) : (
               currentFAQ.map((faq) => (
-                <div key={faq.id} className="border-b border-gray-50 last:border-b-0">
+                <div
+                  key={faq.id}
+                  className="border-b border-gray-50 last:border-b-0"
+                >
                   <button
                     onClick={() => toggleFAQ(faq.id)}
                     className="w-full flex justify-between items-center p-6 hover:bg-gray-50 transition-colors duration-200 group"
                     aria-expanded={openId === faq.id}
                   >
-                    <Text variant="body" weight="medium" className={clsx("text-left", openId === faq.id ? "text-black font-semibold" : "text-gray-900")}>
+                    <Text
+                      variant="body"
+                      weight="medium"
+                      className={clsx(
+                        "text-left",
+                        openId === faq.id
+                          ? "text-black font-semibold"
+                          : "text-gray-900",
+                      )}
+                    >
                       {faq.question}
                     </Text>
                     <span className="text-xl font-semibold">
-                      {openId === faq.id ? '−' : '+'}
+                      {openId === faq.id ? "−" : "+"}
                     </span>
                   </button>
-                  
-                  <div 
+
+                  <div
                     className={clsx(
-                      'overflow-hidden transition-all duration-300 ease-in-out',
-                      openId === faq.id ? 'max-h-96 opacity-100 p-6 pt-0' : 'max-h-0 opacity-0'
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      openId === faq.id
+                        ? "max-h-96 opacity-100 p-6 pt-0"
+                        : "max-h-0 opacity-0",
                     )}
                   >
-                    <Text variant="body" className="text-gray-600 text-sm leading-relaxed">
+                    <Text
+                      variant="body"
+                      className="text-gray-600 text-sm leading-relaxed"
+                    >
                       {faq.answer}
                     </Text>
                   </div>
@@ -126,4 +155,3 @@ const FAQ_SECTION = () => {
 };
 
 export default FAQ_SECTION;
-

@@ -10,7 +10,7 @@ import useEmblaCarousel from "embla-carousel-react";
 const SCENE_IMAGES = [
   "/assets/smart-scene/Rectangle 4945.png",
   "/assets/smart-scene/scene-1.png",
-"/assets/product-category/Homepage_Product Category_Smart Devices 4.png",
+  "/assets/product-category/Homepage_Product Category_Smart Devices 4.png",
   "/assets/smart-scene/Rectangle 4941.png",
   "/assets/smart-scene/Rectangle 4943.png",
 ];
@@ -18,8 +18,7 @@ const SCENE_IMAGES = [
 export default function SmartSceneSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
-    loop: true, 
-
+    loop: true,
   });
 
   const [selectedIndex, setSelectedIndex] = useState(2);
@@ -37,9 +36,12 @@ export default function SmartSceneSection() {
     return () => emblaApi.off("select", onSelect);
   }, [emblaApi]);
 
-  const scrollTo = useCallback((i: number) => {
-    emblaApi?.scrollTo(i);
-  }, [emblaApi]);
+  const scrollTo = useCallback(
+    (i: number) => {
+      emblaApi?.scrollTo(i);
+    },
+    [emblaApi],
+  );
 
   const getDiff = (index: number) => {
     const len = SCENE_IMAGES.length;
@@ -48,17 +50,12 @@ export default function SmartSceneSection() {
     return Math.abs(diff) < Math.abs(alt) ? diff : alt;
   };
 
-
-
   return (
     <section className="py-24 bg-white overflow-hidden">
       <Container>
-
         {/* HEADER */}
         <div className="text-center mb-16">
-          <span className="text-sm text-gray-500 block mb-4">
-            Smart Scene
-          </span>
+          <span className="text-sm text-gray-500 block mb-4">Smart Scene</span>
 
           <Text variant="h2" className="text-3xl md:text-4xl text-gray-900">
             The Smart Way to Manage Your Daily Routine
@@ -68,10 +65,8 @@ export default function SmartSceneSection() {
         {/* 🔥 CAROUSEL */}
         <div className="relative py-16">
           <div className="w-full [perspective:2000px]">
-
             <div ref={emblaRef} className="overflow-visible">
               <div className="flex gap-6 items-center">
-
                 {SCENE_IMAGES.map((src, i) => {
                   const diff = getDiff(i);
                   const isActive = diff === 0;
@@ -87,7 +82,6 @@ export default function SmartSceneSection() {
                     >
                       {isActive ? (
                         <div className="relative w-full h-full flex items-center justify-center">
-
                           {/* CONTENT */}
                           <div
                             className="absolute overflow-hidden z-0"
@@ -128,7 +122,6 @@ export default function SmartSceneSection() {
                     </div>
                   );
                 })}
-
               </div>
             </div>
           </div>
@@ -151,10 +144,10 @@ export default function SmartSceneSection() {
 
         {/* DESC */}
         <p className="text-center text-gray-500 mt-10 max-w-xl mx-auto text-sm">
-          Save energy effortlessly with automated settings that power down unused appliances,
-          reducing waste and lowering your energy costs every day.
+          Save energy effortlessly with automated settings that power down
+          unused appliances, reducing waste and lowering your energy costs every
+          day.
         </p>
-
       </Container>
     </section>
   );

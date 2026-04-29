@@ -1,7 +1,7 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from 'react';
-import { X } from 'lucide-react';
+import { ReactNode, useEffect, useRef } from "react";
+import { X } from "lucide-react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -14,7 +14,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
 
     const handleClickOutside = (e: MouseEvent) => {
@@ -24,15 +24,15 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
     };
 
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      document.addEventListener('keydown', handleEscape);
-      document.addEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", handleEscape);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
-      document.removeEventListener('keydown', handleEscape);
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = "unset";
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen, onClose]);
 
@@ -40,7 +40,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in-0 zoom-in-95 duration-300">
-      <div 
+      <div
         ref={modalRef}
         className="bg-white rounded-2xl w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100 animate-in slide-in-from-bottom duration-300"
       >
@@ -53,13 +53,10 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="pt-8">
-          {children}
-        </div>
+        <div className="pt-8">{children}</div>
       </div>
     </div>
   );
 };
 
 export default Modal;
-
